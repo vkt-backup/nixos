@@ -6,7 +6,18 @@
       ./hardware-configuration.nix
     ];
 
-  boot.loader.limine.enable = true;
+  boot.loader.limine = {
+    enable = true;
+
+	efiSupport = true;
+
+	extraEntries = ''
+		Windows
+		  path: /EFI/Microsoft/Boot/bootmgfw.efi
+		  comment: Windows 11
+	''
+  };
+
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -16,6 +27,7 @@
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/Sao_Paulo";
+  time.hardwareClockInLocalTime = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
