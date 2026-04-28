@@ -16,4 +16,25 @@ in
   home.file."Imagens/Wallpapers".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/Wallpapers";
   home.file."scripts/".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/scripts";
   home.file.".config/noctalia".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/noctalia";
+
+  gtk = {
+    enable = true;
+
+	gtk4.theme = config.gtk.theme;
+
+	theme = {
+      name = "adw-gtk3-dark";
+	  package = pkgs.adw-gtk3;
+    };
+
+    iconTheme = { 
+	  name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
+
+	cursorTheme = {
+	  name = "WhiteSur-cursors";
+	  package = pkgs.whitesur-cursors;
+	};
+  };
 }

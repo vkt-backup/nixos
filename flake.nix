@@ -11,6 +11,10 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    silentSDDM = {
+      url = "github:uiriansan/SilentSDDM";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, noctalia, ... }: {
@@ -19,14 +23,16 @@
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
-	home-manager.nixosModules.home-manager {
-	  home-manager = {
-	    useGlobalPkgs = true;
-	    useUserPackages = true; 
-	    users.victor = import ./home.nix;
-	    backupFileExtension = "backup";
-	  };
-	}
+        ./hardware-configuration.nix
+	    home-manager.nixosModules.home-manager {
+	      home-manager = {
+	        useGlobalPkgs = true;
+	        useUserPackages = true; 
+	        users.victor = import ./home.nix;
+	        backupFileExtension = "backup";
+	      };
+	    }
+	    inputs.silentSDDM.nixosModules.default
       ];
     };
   };
