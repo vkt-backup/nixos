@@ -54,6 +54,9 @@ in
 	enable = true;
 	powerOnBoot = true;
   };
+
+  #hardware.uinput.enable = true;
+
   services.blueman.enable = true;
 
   boot.loader.efi.canTouchEfiVariables = true;
@@ -206,7 +209,7 @@ in
 
   users.users.victor = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "libvirtd" "kvm" ];
+    extraGroups = [ "wheel" "docker" "libvirtd" "kvm" "video" "input" "networkmanager" ];
     packages = with pkgs; [
       tree
     ];
@@ -236,6 +239,18 @@ in
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [ pkgs.xdg-desktop-portal-hyprland ];
+    config = {
+      common = {
+        default = [ "gtk" ];
+      };
+
+      hyprland = {
+        default = [ "gtk" ];
+
+        "org.freedesktop.impl.portal.ScreenCast" = [ "hyprland" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "hyprland" ];
+      };
+    };
   };
 
   programs.hyprland = {
@@ -296,7 +311,12 @@ in
     storageDriver = "btrfs";
   };
 
-
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
 
   environment.systemPackages = with pkgs; [
     #Shell utilities
@@ -310,6 +330,7 @@ in
     ripgrep
 
     #Hyprland utilities
+	hyprshutdown
     hypridle
     matugen
     wl-clipboard
@@ -332,6 +353,7 @@ in
 	unzip
     foot
     music-presence
+	distrobox
 
 	#LLMs locais
 	lmstudio
@@ -353,7 +375,11 @@ in
 	gamescope
 	mangohud
 	goverlay
+	heroic
 	#lutris
+
+    #Programing
+	posting
 
 	#Programing languages
 	gcc
@@ -361,6 +387,7 @@ in
 	clang-tools
 	rustc
 	cargo
+	typescript
 
 	#LSPs
 	nixd
@@ -368,6 +395,10 @@ in
 	clang-tools
 	rust-analyzer
 	tree-sitter
+	vscode-langservers-extracted
+	typescript-language-server
+	astro-language-server
+	jdt-language-server
 
     #Codecs de video
     ffmpeg-full

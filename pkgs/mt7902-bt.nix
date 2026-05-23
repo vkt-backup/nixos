@@ -1,16 +1,17 @@
-{ lib, stdenv, fetchgit, kernel, kmod }:
+{ lib, stdenv, fetchFromGitHub, kernel, kmod }:
 
 stdenv.mkDerivation rec {
   pname = "mt7902-bt";
   version = "unstable-2025";
 
-  src = fetchgit {
-    url = "https://github.com/OnlineLearningTutorials/mt7902_temp";
-    rev = "main";
-	sha256 = "0aljvyqicq01phvd8v4c9mdq44zx3gwppliywaqqwbjvlj4wigiy"; #lib.fakeSha256; #"";
-  };
+  src = fetchFromGitHub {
+    owner = "OnlineLearningTutorials";
+    repo = "mt7902_temp";
+    rev = "d47026d2817d86a52c58ede5494db32b1548f440";
+    hash = "sha256-ab3d8cwJ7OLQmzBfwNIwdkJWNi6AMiM7FR5u1/4vLXc=";
+  }; 
 
-  sourceRoot = "mt7902_temp/linux-${lib.versions.majorMinor kernel.version}/drivers/bluetooth";
+  sourceRoot = "source/linux-${lib.versions.majorMinor kernel.version}/drivers/bluetooth";
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
