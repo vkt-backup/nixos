@@ -8,9 +8,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+	silentSDDM = {
+      url = "github:uiriansan/SilentSDDM";
+	  inputs.nixpkgs.follows = "nixpkgs";
+	};
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager }: 
+  outputs = inputs@{ self, nixpkgs, home-manager, silentSDDM, ... }: 
   let
     user = "victor";
 
@@ -21,13 +26,17 @@
         useUserPackages = true;
         backupFileExtension = "backup";
 	
-	users.${user} = {
-	  home.username = user;
-	  home.homeDirectory = "/home/${user}";
-	  home.stateVersion = "26.11";
-	};
+	    users.${user} = {
+	      home.username = user;
+	      home.homeDirectory = "/home/${user}";
+	      home.stateVersion = "26.11";
+	    };
       };
     };
+
+	silentSddmModule = {
+		imports = [ silentSDDM.nixosModules.default ];
+	};
   in
   {
     nixosConfigurations = {
@@ -36,6 +45,7 @@
         specialArgs = { inherit user; };
 	modules = [
           homeManagerModule
+		  silentSddmModule
           ./hosts/desktop
         ];
       };
@@ -45,6 +55,7 @@
         specialArgs = { inherit user; };
         modules = [
           homeManagerModule
+		  silentSddmModule
           ./hosts/vm
         ];
       };

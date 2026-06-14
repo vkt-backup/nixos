@@ -1,23 +1,13 @@
-{ user, ... }:
+{ user, pkgs, ... }:
 
 {
   home-manager.users.${user} = { config, ... }: {
-    programs.neovim = {
-      enable = true;
-      defaultEditor = true;
-    };
-    #assertions = [{
-    #  assertion = false;
-    #  message = "homeDirectory = ${config.home.homeDirectory}";
-    #}];
-    #assertions = [{
-    #  assertion = false;
-    #  message = ''
-    #    username=${config.home.username}
-    #    home=${config.home.homeDirectory}
-    #  '';
-    #}];
+    home.packages = with pkgs; [ 
+	  neovim
+      tree-sitter 
+	];
+    home.sessionVariables.EDITOR = "nvim";
 
-    xdg.configFile."nvim".source = ../../config/nvim;
+    xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/config/nvim";
   };
 }

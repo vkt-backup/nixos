@@ -8,6 +8,8 @@
 
         efiSupport = true;
 
+		#maxGenerations = 2;
+
         style = {
           wallpapers = [ ../../assets/fallout_limine_background.png ];
           
@@ -52,7 +54,7 @@
       ];
     };
 
-    kernelModules = [ "ntsync" "btusb" "btmtk" ];
+    kernelModules = [ "ntsync" ];
 
     blacklistedKernelModules = [];
 
