@@ -1,6 +1,16 @@
 [submodule "config/nvim"]
 	path = config/nvim
 	url = git@github.com:vkt-backup/nvim.git
+	branch =  nvim-0-12-rewrite
 [submodule "config/zsh"]
 	path = config/zsh
 	url = git@github.com:vkt-backup/zsh.git
+	branch = main
+[submodule "config/hypr"]
+	path = config/hypr
+	url = git@github.com:vkt-backup/hyprland-config.git
+	branch = noctalia
+[submodule "config/wallpapers"]
+	path = config/wallpapers
+	url = git@github.com:vkt-backup/Wallpapers.git
+	branch = main

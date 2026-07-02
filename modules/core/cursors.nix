@@ -6,9 +6,9 @@
       whitesur-cursors
 	];
 
-	varibles = {
+	variables = {
 	  XCURSOR_THEME = "WhiteSur-cursors";
 	  XCURSOR_SIZE = "24";
-	}
+	};
   };
 }

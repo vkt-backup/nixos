@@ -13,9 +13,14 @@
       url = "github:uiriansan/SilentSDDM";
 	  inputs.nixpkgs.follows = "nixpkgs";
 	};
+
+	noctalia = {
+	  url = "github:noctalia-dev/noctalia-shell";
+	  inputs.nixpkgs.follows = "nixpkgs";
+	};
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, silentSDDM, ... }: 
+  outputs = inputs@{ self, nixpkgs, home-manager, silentSDDM, noctalia, ... }: 
   let
     user = "victor";
 
@@ -42,7 +47,7 @@
     nixosConfigurations = {
       desktop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit user; };
+        specialArgs = { inherit user inputs; };
 	modules = [
           homeManagerModule
 		  silentSddmModule
@@ -52,7 +57,7 @@
 
       vm = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit user; };
+        specialArgs = { inherit user inputs; };
         modules = [
           homeManagerModule
 		  silentSddmModule
