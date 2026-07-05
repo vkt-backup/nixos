@@ -9,15 +9,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-	silentSDDM = {
+    silentSDDM = {
       url = "github:uiriansan/SilentSDDM";
-	  inputs.nixpkgs.follows = "nixpkgs";
-	};
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-	noctalia = {
-	  url = "github:noctalia-dev/noctalia-shell";
-	  inputs.nixpkgs.follows = "nixpkgs";
-	};
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak/?ref=latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, silentSDDM, noctalia, ... }: 
@@ -31,26 +36,26 @@
         useUserPackages = true;
         backupFileExtension = "backup";
 	
-	    users.${user} = {
-	      home.username = user;
-	      home.homeDirectory = "/home/${user}";
-	      home.stateVersion = "26.11";
-	    };
+        users.${user} = {
+          home.username = user;
+          home.homeDirectory = "/home/${user}";
+          home.stateVersion = "26.11";
+        };
       };
     };
 
 	silentSddmModule = {
 		imports = [ silentSDDM.nixosModules.default ];
-	};
+    };
   in
   {
     nixosConfigurations = {
       desktop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit user inputs; };
-	modules = [
+        modules = [
           homeManagerModule
-		  silentSddmModule
+          silentSddmModule
           ./hosts/desktop
         ];
       };
@@ -60,7 +65,7 @@
         specialArgs = { inherit user inputs; };
         modules = [
           homeManagerModule
-		  silentSddmModule
+          silentSddmModule
           ./hosts/vm
         ];
       };

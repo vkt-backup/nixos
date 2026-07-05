@@ -14,3 +14,6 @@
 	path = config/wallpapers
 	url = git@github.com:vkt-backup/Wallpapers.git
 	branch = main
+[submodule "config/starship"]
+	path = config/starship
+	url = git@github.com:vkt-backup/starship.git

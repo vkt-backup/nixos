@@ -4,9 +4,9 @@
   imports = [
     ../../profiles/base.nix
     ../../modules/editors/neovim.nix
-	#../../modules/desktops/plasma.nix
-	../../modules/desktops/hyprland.nix
-	../../modules/browsers/firefox.nix
+    #../../modules/desktops/plasma.nix
+    ../../modules/desktops/hyprland.nix
+    ../../modules/browsers/firefox.nix
     ./hardware-configuration.nix
     ./configuration.nix
   ];

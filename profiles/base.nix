@@ -3,18 +3,24 @@
 {
   imports = [
     ../modules/core/bootloader.nix
-	../modules/core/bluetooth.nix
-	../modules/core/audio.nix
-	../modules/core/swap.nix
-	../modules/core/cursors.nix
-	../modules/hardware/input.nix
-	../modules/users
-	../modules/cli/zsh.nix
-	../modules/cli/yazi.nix
-	../modules/cli/git.nix
-	../modules/cli/ripgrep.nix
-	../modules/cli/fastfetch.nix
-	../modules/desktops/sddm.nix
+    ../modules/core/bluetooth.nix
+    ../modules/core/audio.nix
+    ../modules/core/swap.nix
+    ../modules/core/cursors.nix
+    ../modules/core/codecs.nix
+    ../modules/hardware/input.nix
+    ../modules/users
+    ../modules/cli/zsh.nix
+    ../modules/cli/yazi.nix
+    ../modules/cli/git.nix
+    ../modules/cli/fastfetch.nix
+    ../modules/cli/starship.nix
+    ../modules/cli/cli-tools.nix
+    ../modules/cli/btop.nix
+    ../modules/desktops/sddm.nix
+    ../modules/flatpak
+    ../modules/gaming
+    ../modules/apps
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

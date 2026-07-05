@@ -6,29 +6,29 @@
 	  xwayland.enable = true;
   };
 
+  imports = [
+    ../apps/nautilus.nix
+  ];
+
   environment.systemPackages = with pkgs; [
     hypridle
-	hyprshutdown
-	matugen
-	wl-clipboard
-	cliphist
-	wljoywake
-	inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
-	nwg-look
-	adw-gtk3
-	adwaita-icon-theme
-	kdePackages.qt6ct
-	kdePackages.qtwayland
-	kdePackages.breeze
-	kdePackages.breeze-icons
-	kdePackages.qtstyleplugin-kvantum
-	grim
-	slurp
-	swappy
-
-	foot
-	kdePackages.dolphin
-	nautilus
+    hyprshutdown
+    matugen
+    wl-clipboard
+    cliphist
+    wljoywake
+    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+    nwg-look
+    adw-gtk3
+    adwaita-icon-theme
+    kdePackages.qt6ct
+    kdePackages.qtwayland
+    kdePackages.breeze
+    kdePackages.breeze-icons
+    kdePackages.qtstyleplugin-kvantum
+    grim
+    slurp
+    swappy
   ];
 
   home-manager.users.${user} = { config, ... }: {
@@ -67,19 +67,19 @@
   };
 
   environment.sessionVariables = {
-	QT_QPA_PLATFORMTHEME = "qt5ct";
-	QT_STYLE_OVERRIDE = "breeze";
+    QT_QPA_PLATFORMTHEME = "qt5ct";
+    QT_STYLE_OVERRIDE = "breeze";
   };
 
   qt = {
-	enable = true;
-	platformTheme = "qt5ct";
-	style = "breeze";
+    enable = true;
+    platformTheme = "qt5ct";
+    style = "breeze";
   };
  
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [ pkgs.xdg-desktop-portal-hyprland ];
+    extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
 
     config = {
       common = {
@@ -92,6 +92,5 @@
         "org.freedesktop.impl.portal.ScreenCast" = [ "hyprland" ];
         "org.freedesktop.impl.portal.Screenshot" = [ "hyprland" ];
       };
-    };
-  };
+    }; };
 }
