@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../modules/virtualization/docker.nix
+    ../modules/virtualization/libvirt.nix
 	../modules/virtualization/docker.nix
   ];
 }

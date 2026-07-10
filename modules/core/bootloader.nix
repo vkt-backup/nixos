@@ -22,6 +22,13 @@
             brightForeground = "6CE974";
           };
         };
+
+		extraEntries = ''
+	    /Windows
+	        protocol: efi
+	        path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
+	        comment: Windows 11
+		'';
       };
 
       efi.canTouchEfiVariables = true;

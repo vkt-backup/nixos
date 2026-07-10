@@ -7,7 +7,8 @@
     packages = with pkgs; [
       noto-fonts
       noto-fonts-color-emoji
-	    nerd-fonts.jetbrains-mono
+      #noto-fonts-cjk
+      nerd-fonts.jetbrains-mono
       nerd-fonts.comic-shanns-mono
       freetype
       dejavu_fonts

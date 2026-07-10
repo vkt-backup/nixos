@@ -2,8 +2,8 @@
 
 {
   programs.hyprland = {
-	  enable = true;
-	  xwayland.enable = true;
+    enable = true;
+    xwayland.enable = true;
   };
 
   imports = [
@@ -29,6 +29,7 @@
     grim
     slurp
     swappy
+	glib
   ];
 
   home-manager.users.${user} = { config, ... }: {
@@ -46,29 +47,53 @@
 
     home.file.".config/kdeglobals".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/config/hypr/qt/kdeglobals";
 
-    gtk = {
-      enable = true;
+    #home.file.".config/gtk-3.0/settings.ini".text = ''
+    #[Settings]
+    #gtk-theme-name=adw-gtk3-dark
+    #gtk-icon-theme-name=Adwaita
+    #gtk-decoration-layout=appmenu:close
+    #'';
 
-      theme = {
-        name = "adw-gtk3-dark";
-        package = pkgs.adw-gtk3;
-      };
+    #home.file.".config/gtk-4.0/settings.ini".text = ''
+    #[Settings]
+    #gtk-decoration-layout=appmenu:close
+    #'';
 
-      iconTheme = {
-        name = "Adwaita";
-        package = pkgs.adwaita-icon-theme;
-      };
+    #gtk = {
+    #  enable = true;
 
-      #cursorTheme = {
-      #  name = "whitesur-cursors";
-      #  package = pkgs.whitesur-cursors;
-      #};
-    };
+    #  theme = {
+    #    name = "adw-gtk3-dark";
+    #    package = pkgs.adw-gtk3;
+    #  };
+
+    #  iconTheme = {
+    #    name = "Adwaita";
+    #    package = pkgs.adwaita-icon-theme;
+    #  };
+
+    #  gtk3.extraConfig = {
+    #    gtk-decoration-layout = "appmenu:none";
+    #  };
+
+    #  gtk4.extraConfig = {
+    #    gtk-decoration-layout = "appmenu:none";
+    #  };
+
+    #  #cursorTheme = {
+    #  #  name = "whitesur-cursors";
+    #  #  package = pkgs.whitesur-cursors;
+    #  #};
+    #};
   };
 
   environment.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
     QT_STYLE_OVERRIDE = "breeze";
+    XDG_CURRENT_DESKTOP = "Hyprland";
+	XDG_SESSION_DESKTOP = "Hyprland";
+	XDG_SESSION_TYPE = "wayland";
+	DESKTOP_SESSION = "hyprland";
   };
 
   qt = {
@@ -92,5 +117,6 @@
         "org.freedesktop.impl.portal.ScreenCast" = [ "hyprland" ];
         "org.freedesktop.impl.portal.Screenshot" = [ "hyprland" ];
       };
-    }; };
+    }; 
+  };
 }

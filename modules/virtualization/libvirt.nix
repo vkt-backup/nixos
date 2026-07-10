@@ -1,6 +1,12 @@
 { pkgs, user, ... }:
 
 {
+  environment.systemPackages = with pkgs; [
+    virt-manager 
+	qemu_full
+	dnsmasq
+  ];
+
   virtualization.libvirtd = {
     enable = true;
 
@@ -13,12 +19,6 @@
 
 	allowedBridges = [];
   };
-
-  environment.systemPackages = with pkgs; [
-    virt-manager 
-	qemu_full
-	dnsmasq
-  ];
 
   networking.firewall.trustedInterfaces = [ "virbr0" ];
 
