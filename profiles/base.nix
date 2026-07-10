@@ -8,6 +8,7 @@
     ../modules/core/swap.nix
     ../modules/core/cursors.nix
     ../modules/core/codecs.nix
+	../modules/core/fonts.nix
     ../modules/hardware/input.nix
     ../modules/users
     ../modules/cli/zsh.nix
