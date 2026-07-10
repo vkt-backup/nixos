@@ -16,6 +16,7 @@ in
   home.file."Imagens/Wallpapers".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/Wallpapers";
   home.file."scripts/".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/scripts";
   home.file.".config/noctalia".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/noctalia";
+  home.file.".config/fastfetch/config.jsonc".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/fastfetch/custom.jsonc";
 
   gtk = {
     enable = true;

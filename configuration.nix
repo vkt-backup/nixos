@@ -1,15 +1,15 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  mt7902-bt = pkgs.callPackage ./pkgs/mt7902-bt.nix {
-	  inherit (config.boot.kernelPackages) kernel;
-  };
+  #mt7902-bt = pkgs.callPackage ./pkgs/mt7902-bt.nix {
+  #    inherit (config.boot.kernelPackages) kernel;
+  #};
   music-presence = pkgs.callPackage ./pkgs/music-presence.nix {};
-in 
-{
-  imports =
-    [
+in { 
+	imports = [
       ./hardware-configuration.nix
+	  ./fastfetch.nix
+	  inputs.nix-flatpak.nixosModules.nix-flatpak
     ];
 
   boot.loader.limine = {
@@ -52,7 +52,7 @@ in
 
   hardware.bluetooth = {
 	enable = true;
-	powerOnBoot = true;
+	powerOnBoot = false;
   };
 
   #hardware.uinput.enable = true;
@@ -74,11 +74,11 @@ in
 
   boot.initrd.verbose = false;
 
-  boot.loader.limine.maxGenerations = 2;
+  boot.loader.limine.maxGenerations = 3;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  boot.extraModulePackages = [ mt7902-bt ];
+  #boot.extraModulePackages = [ mt7902-bt ];
 
   boot.plymouth = {
     enable = true;
@@ -102,6 +102,13 @@ in
 
   time.timeZone = "America/Sao_Paulo";
 
+  swapDevices = [
+	{
+		device = "/swap/swapfile";
+		discardPolicy = "once";
+	}
+  ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   i18n = {
@@ -119,7 +126,7 @@ in
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
-  # };
+  # };;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -136,6 +143,25 @@ in
     };
   };
 
+  services.flatpak = {
+    enable = true;
+
+    remotes = [
+	  {
+	    name = "flathub";
+		location = "https://flathub.org/repo/flathub.flatpakrepo";
+	  }
+	];
+	
+	packages = [
+	  "org.vinegarhq.Sober"
+	];
+  };
+
+  services.udev.extraRules = '' 
+  KERNEL=="hidraw*", ATTRS{idVendor}=="fffe", ATTRS{idProduct}=="0087", MODE="0660", GROUP="input"
+  ''; 
+
   services.libinput = {
     enable = true;
   
@@ -145,18 +171,20 @@ in
     };
   };
 
+  myModules.fastfetch.enable = true;
+
   programs.silentSDDM = {
     enable = true;
 	theme = "rei";
 
 	backgrounds = {
 		city = ./assets/city.mp4;
-	};
+	}; 
 
-	settings = {
+	settings = { 
 	  "LockScreen" = { 
-        background = "city.mp4";
-	  };
+		  background = "city.mp4"; 
+      };
 
       "LoginScreen" = {
         background = "city.mp4";
@@ -184,6 +212,9 @@ in
 	  };
 	};
   };
+
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
   
   services.zerotierone = {
     enable = true;
@@ -216,8 +247,8 @@ in
     shell = pkgs.bash;
   };
 
-  programs.firefox = {
-    enable = true;
+  programs.firefox = { #customize todo
+     enable = true;
 
     languagePacks = [ "pt-BR" "en-US" ];
 
@@ -231,14 +262,14 @@ in
     };
   };
 
-  programs.steam = {
+  programs.steam = { #Gaming
     enable = true;
     gamescopeSession.enable = false;
   };
 
-  xdg.portal = {
+  xdg.portal = { # Hyprland
     enable = true;
-    extraPortals = with pkgs; [ pkgs.xdg-desktop-portal-hyprland ];
+    extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
     config = {
       common = {
         default = [ "gtk" ];
@@ -253,7 +284,7 @@ in
     };
   };
 
-  programs.hyprland = {
+  programs.hyprland = { # Hyprland
     enable = true;
     xwayland.enable = true;
   };
@@ -261,14 +292,18 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
-  virtualisation.libvirtd = { 
+  virtualisation.libvirtd = {
 	enable = true;
 	qemu = {
 	  package = pkgs.qemu_kvm;
 	  runAsRoot = true;
 	  swtpm.enable = true;
+	  #ovmf.enable = true;
 	};
   };
+  virtualisation.libvirtd.allowedBridges = [ ];
+
+  networking.firewall.trustedInterfaces = [ "virbr0" ];
 
   fonts = {
     enableDefaultPackages = true;
@@ -294,7 +329,7 @@ in
     QT_STYLE_OVERRIDE = "breeze";
   };
 
-  qt = { 
+  qt = {
     enable = true; 
     platformTheme = "qt5ct"; 
     style = "breeze"; 
@@ -318,18 +353,42 @@ in
     openFirewall = true;
   };
 
+  programs.nix-ld = {
+    enable = true;
+
+	libraries = with pkgs; [
+      bzip2
+	];
+  };
+
   environment.systemPackages = with pkgs; [
-    #Shell utilities
+    #Shell utilities feito
     bash
     git
     eza
     bat
-    zsh
+    zsh 
     starship
     wget
     ripgrep
+	lavat
+	jq
+	socat
 
-    #Hyprland utilities
+	#Proton
+	proton-pass
+
+	#Browsers
+	qutebrowser
+	chromium
+
+	#App Image
+	appimage-run
+
+	#Moonlight
+	moonlight-qt
+
+    #Hyprland utilities feito
 	hyprshutdown
     hypridle
     matugen
@@ -349,6 +408,7 @@ in
     swappy
     cliphist
 
+    kdePackages.dolphin 
     neovim
 	unzip
     foot
@@ -358,7 +418,7 @@ in
 	#LLMs locais
 	lmstudio
 
-	#Cursor
+	#Cursor fetio
 	whitesur-cursors
 
     #Other
@@ -368,7 +428,7 @@ in
     kdePackages.sddm-kcm
     kdePackages.kwin
 
-    #games
+    #games feito
     protonup-qt
 	protontricks
 	zerotierone
@@ -381,7 +441,7 @@ in
     #Programing
 	posting
 
-	#Programing languages
+	#Programing languages todo
 	gcc
 	clang
 	clang-tools
@@ -389,7 +449,7 @@ in
 	cargo
 	typescript
 
-	#LSPs
+	#LSPs todo
 	nixd
 	lua-language-server
 	clang-tools
@@ -400,7 +460,8 @@ in
 	astro-language-server
 	jdt-language-server
 
-    #Codecs de video
+
+    #Codecs de video todo
     ffmpeg-full
     #gstreamer
     vlc
@@ -412,22 +473,22 @@ in
     gst_all_1.gst-plugins-ugly
     gst_all_1.gst-libav
 
-    #Áudio
+    #Áudio verificar
     pipewire
     wireplumber
 
-    #Bluetooth
+    #Bluetooth verificar
     bluez
     bluez-tools
 
-    #Docker e VMS
+    #Docker e VMS verificar
     docker
     docker-compose
     virt-manager
     qemu_full
-    #dnsmasq
+	dnsmasq
 
-    #Btop gpu driver
+    #Btop gpu driver feito
 	rocmPackages.rocm-smi
 
     #Apps
@@ -453,31 +514,31 @@ in
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh.enable = true; 
 
-  services.keyd = {
-    enable = true;
+  #services.keyd = {
+  #  enable = true;
 
-	keyboards = {
-	  default = {
-	    ids = [ "*" ];
-		
-		extraConfig = ''
-		  [main]
-		  rightalt = layer(ralt)
+  #  keyboards = {
+  #    default = {
+  #      ids = [ "*" ];
+  #  	
+  #  	extraConfig = ''
+  #  	  [main]
+  #  	  rightalt = layer(ralt)
 
-		  [ralt]
-		  j = down
-		  k = up
-		  h = left
-		  l = right
-		'';
-	  };
-	};
-  };
+  #  	  [ralt]
+  #  	  j = down
+  #  	  k = up
+  #  	  h = left
+  #  	  l = right
+  #  	'';
+  #    };
+  #  };
+  #};
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 22000 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
