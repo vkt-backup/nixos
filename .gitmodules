@@ -17,3 +17,7 @@
 [submodule "config/starship"]
 	path = config/starship
 	url = git@github.com:vkt-backup/starship.git
+[submodule "config/scripts"]
+	path = config/scripts
+	url = git@github.com:vkt-backup/scripts.git
+	branch = main
