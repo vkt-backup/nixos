@@ -143,6 +143,7 @@ in {
     };
   };
 
+
   services.flatpak = {
     enable = true;
 
@@ -151,6 +152,10 @@ in {
 	    name = "flathub";
 		location = "https://flathub.org/repo/flathub.flatpakrepo";
 	  }
+      {
+        name = "trinity";
+        location = "https://github.com/Trinity-LA/Trinity-Launcher/releases/download/flatpak/com.trench.trinity.launcher.flatpakrepo";
+      }
 	];
 	
 	packages = [
