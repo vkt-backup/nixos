@@ -21,3 +21,7 @@
 	path = config/scripts
 	url = git@github.com:vkt-backup/scripts.git
 	branch = main
+[submodule "config/foot"]
+	path = config/foot
+	url = git@github.com:vkt-backup/foot.git
+	branch = main
