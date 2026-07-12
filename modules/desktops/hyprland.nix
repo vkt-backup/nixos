@@ -35,9 +35,7 @@
   home-manager.users.${user} = { config, ... }: {
     home.file.".config/hypr".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/config/hypr";
 
-    home.file.".config/noctalia/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/config/noctalia/settings.json";
-
-    home.file.".config/noctalia/plugins.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/config/noctalia/plugins.json";
+    home.file.".config/noctalia".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/config/noctalia";
 
     home.file.".local/state/noctalia/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/config/noctalia/settings.json";
 
@@ -59,32 +57,32 @@
     #gtk-decoration-layout=appmenu:close
     #'';
 
-    #gtk = {
-    #  enable = true;
+    gtk = {
+      enable = true;
 
-    #  theme = {
-    #    name = "adw-gtk3-dark";
-    #    package = pkgs.adw-gtk3;
-    #  };
+      theme = {
+        name = "adw-gtk3-dark";
+        package = pkgs.adw-gtk3;
+      };
 
-    #  iconTheme = {
-    #    name = "Adwaita";
-    #    package = pkgs.adwaita-icon-theme;
-    #  };
+      iconTheme = {
+        name = "Adwaita";
+        package = pkgs.adwaita-icon-theme;
+      };
 
-    #  gtk3.extraConfig = {
-    #    gtk-decoration-layout = "appmenu:none";
-    #  };
+      gtk3.extraConfig = {
+        gtk-decoration-layout = "appmenu:none";
+      };
 
-    #  gtk4.extraConfig = {
-    #    gtk-decoration-layout = "appmenu:none";
-    #  };
+      gtk4.extraConfig = {
+        gtk-decoration-layout = "appmenu:none";
+      };
 
-    #  #cursorTheme = {
-    #  #  name = "whitesur-cursors";
-    #  #  package = pkgs.whitesur-cursors;
-    #  #};
-    #};
+      #cursorTheme = {
+      #  name = "whitesur-cursors";
+      #  package = pkgs.whitesur-cursors;
+      #};
+    };
   };
 
   environment.sessionVariables = {
