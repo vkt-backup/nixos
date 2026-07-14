@@ -1,5 +1,11 @@
 { pkgs, ... }:
 
 {
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+  };
+
+  environment.systemPackages = with pkgs; [
+    pywalfox-native
+  ];
 }
