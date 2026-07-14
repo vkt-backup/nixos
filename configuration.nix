@@ -506,6 +506,8 @@ in {
     qbittorrent
     yazi
     nautilus
+	
+	pywalfox-native
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
