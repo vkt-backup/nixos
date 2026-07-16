@@ -11,5 +11,6 @@
     ./qbittorrent.nix
     ./nautilus.nix
 	./proton-pass.nix
+	./fluxer.nix
   ];
 }
