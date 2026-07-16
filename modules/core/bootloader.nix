@@ -61,7 +61,10 @@
       ];
     };
 
-    kernelModules = [ "ntsync" ];
+    kernelModules = [ 
+      "ntsync"
+	  "v4l2loopback"
+    ];
 
     blacklistedKernelModules = [];
 
