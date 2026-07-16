@@ -3,7 +3,7 @@
 {
   imports = [
     ../../profiles/base.nix
-    ../../profiles/virtualization.nix
+    #../../profiles/virtualization.nix
     ../../modules/editors/neovim.nix
     #../../modules/desktops/plasma.nix
     ../../modules/desktops/hyprland.nix
